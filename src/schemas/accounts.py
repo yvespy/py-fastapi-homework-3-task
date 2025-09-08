@@ -8,14 +8,13 @@ class UserRegistrationRequestSchema(BaseModel):
     password: str
 
     @field_validator("email")
-    @classmethod
     def email_validator(cls, v):
         return validate_email(v)
 
     @field_validator("password")
-    @classmethod
     def password_validator(cls, v):
         return validate_password_strength(v)
+
 
 class UserRegistrationResponseSchema(BaseModel):
     id: int
