@@ -1,10 +1,21 @@
 from pydantic import BaseModel, EmailStr, field_validator
 
+from database.validators.accounts import validate_email, validate_password_strength
+
 
 class UserRegistrationRequestSchema(BaseModel):
     email: EmailStr
     password: str
 
+    @field_validator("email")
+    @classmethod
+    def email_validator(cls, v):
+        return validate_email(v)
+
+    @field_validator("password")
+    @classmethod
+    def password_validator(cls, v):
+        return validate_password_strength(v)
 
 class UserRegistrationResponseSchema(BaseModel):
     id: int
